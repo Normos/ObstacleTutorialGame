@@ -25,17 +25,19 @@ void AMovingPlatform::Tick(float DeltaTime)
 
 void AMovingPlatform::MovePlatform(float DeltaTime)
 {
-	FVector CurrentLocation = GetActorLocation();
-	CurrentLocation = CurrentLocation + (PlatformVelocity * DeltaTime);
-	SetActorLocation(CurrentLocation);
-
-	float const DistanceMoved = FVector::Dist(CurrentLocation, StartLocation);
-
-	if (DistanceMoved > MaxMoveValue)
+	if (ShouldTurnAround())
 	{
 		FlipMovement();
-		LogOvershoot(DistanceMoved);
 	}
+	else
+	{
+		SetActorLocation(GetActorLocation() + (PlatformVelocity * DeltaTime));
+	}
+}
+
+bool AMovingPlatform::ShouldTurnAround()
+{
+	return 	FVector::Dist(GetActorLocation(), StartLocation) > MaxMoveValue;
 }
 
 void AMovingPlatform::FlipMovement()
@@ -44,12 +46,6 @@ void AMovingPlatform::FlipMovement()
 	StartLocation = StartLocation + MoveDirection * MaxMoveValue;
 	SetActorLocation(StartLocation);
 	PlatformVelocity = -PlatformVelocity;
-}
-
-void AMovingPlatform::LogOvershoot(float const DistanceMoved)
-{
-	const float Overshoot = DistanceMoved - MaxMoveValue;
-	UE_LOG(LogTemp, Display, TEXT("Overshoot [%s] Distance: %f"), *GetName(), Overshoot);
 }
 
 void AMovingPlatform::RotatePlatform(float DeltaTime)

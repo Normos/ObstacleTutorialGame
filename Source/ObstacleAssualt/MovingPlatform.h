@@ -27,6 +27,6 @@ private:
 
 	void MovePlatform(float DeltaTime);
 	void RotatePlatform(float DeltaTime);
-	void LogOvershoot(float DistanceMoved);
+	bool ShouldTurnAround();
 	void FlipMovement();
 };
