@@ -5,7 +5,7 @@
 #include "MovingPlatform.generated.h"
 
 UCLASS()
-class OBSTACLEASSUALT_API AMovingPlatform : public AActor
+class OBSTACLEASSUALT_API AMovingPlatform final : public AActor
 {
 	GENERATED_BODY()
 	
@@ -17,11 +17,15 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere, Category="Moving Platform")
+	UPROPERTY(EditAnywhere, Category="Movement")
 	FVector PlatformVelocity = FVector(100,0,0);
 
-	UPROPERTY(EditAnywhere, Category="Moving Platform")
+	UPROPERTY(EditAnywhere, Category="Movement")
 	float MaxMoveValue = 100.0f;
+	
+	UPROPERTY(EditAnywhere, Category="Rotation")
+    FRotator RotationVelocity;
+	
 
 	FVector StartLocation;
 

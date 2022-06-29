@@ -1,8 +1,6 @@
 
 #include "MovingPlatform.h"
 
-#include <Windows.Media.Capture.h>
-
 // Sets default values
 AMovingPlatform::AMovingPlatform()
 {
@@ -17,7 +15,7 @@ void AMovingPlatform::BeginPlay()
 	StartLocation = GetActorLocation();
 }
 
-void AMovingPlatform::Tick(float DeltaTime)
+void AMovingPlatform::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
@@ -25,7 +23,7 @@ void AMovingPlatform::Tick(float DeltaTime)
 	RotatePlatform(DeltaTime);
 }
 
-void AMovingPlatform::MovePlatform(float DeltaTime)
+void AMovingPlatform::MovePlatform(const float DeltaTime)
 {
 	if (ShouldTurnAround())
 	{
@@ -50,9 +48,9 @@ void AMovingPlatform::FlipMovement()
 	PlatformVelocity = -PlatformVelocity;
 }
 
-void AMovingPlatform::RotatePlatform(float DeltaTime)
+void AMovingPlatform::RotatePlatform(const float DeltaTime)
 {
-	UE_LOG(LogTemp, Display, TEXT("Rotate Called!"))
+	SetActorRotation(GetActorRotation() + RotationVelocity * DeltaTime);
 }
 
 bool AMovingPlatform::ShouldTurnAround() const
