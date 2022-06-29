@@ -31,21 +31,31 @@ void AMovingPlatform::MovePlatform(float DeltaTime)
 	}
 	else
 	{
-		SetActorLocation(GetActorLocation() + (PlatformVelocity * DeltaTime));
+		// Move Platform according to set settings
+		SetActorLocation(GetActorLocation() + PlatformVelocity * DeltaTime);
 	}
 }
 
-bool AMovingPlatform::ShouldTurnAround()
-{
-	return 	FVector::Dist(GetActorLocation(), StartLocation) > MaxMoveValue;
+bool AMovingPlatform::ShouldTurnAround() const
+{ 
+	return 	DistanceMoved() > MaxMoveValue;
 }
 
 void AMovingPlatform::FlipMovement()
 {
 	const FVector MoveDirection = PlatformVelocity.GetSafeNormal();
+
+	// Correct for Overshoot
 	StartLocation = StartLocation + MoveDirection * MaxMoveValue;
 	SetActorLocation(StartLocation);
+
+	// Flip Vector
 	PlatformVelocity = -PlatformVelocity;
+}
+
+double AMovingPlatform::DistanceMoved() const
+{
+	return FVector::Dist(GetActorLocation(), StartLocation);
 }
 
 void AMovingPlatform::RotatePlatform(float DeltaTime)
