@@ -1,6 +1,8 @@
 
 #include "MovingPlatform.h"
 
+#include <Windows.Media.Capture.h>
+
 // Sets default values
 AMovingPlatform::AMovingPlatform()
 {
@@ -36,11 +38,6 @@ void AMovingPlatform::MovePlatform(float DeltaTime)
 	}
 }
 
-bool AMovingPlatform::ShouldTurnAround() const
-{ 
-	return 	DistanceMoved() > MaxMoveValue;
-}
-
 void AMovingPlatform::FlipMovement()
 {
 	const FVector MoveDirection = PlatformVelocity.GetSafeNormal();
@@ -53,12 +50,17 @@ void AMovingPlatform::FlipMovement()
 	PlatformVelocity = -PlatformVelocity;
 }
 
-double AMovingPlatform::DistanceMoved() const
-{
-	return FVector::Dist(GetActorLocation(), StartLocation);
-}
-
 void AMovingPlatform::RotatePlatform(float DeltaTime)
 {
 	UE_LOG(LogTemp, Display, TEXT("Rotate Called!"))
+}
+
+bool AMovingPlatform::ShouldTurnAround() const
+{
+	return 	GetDistanceMoved() > MaxMoveValue;
+}
+
+double AMovingPlatform::GetDistanceMoved() const
+{
+	return FVector::Dist(GetActorLocation(), StartLocation);
 }

@@ -28,6 +28,6 @@ private:
 	void MovePlatform(float DeltaTime);
 	void RotatePlatform(float DeltaTime);
 	bool ShouldTurnAround() const;
-	double DistanceMoved() const;
+	double GetDistanceMoved() const;
 	void FlipMovement();
 };
