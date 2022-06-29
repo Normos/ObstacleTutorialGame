@@ -26,6 +26,7 @@ private:
 	FVector StartLocation;
 
 	void MovePlatform(float DeltaTime);
+	void RotatePlatform(float DeltaTime);
 	void LogOvershoot(float DistanceMoved);
 	void FlipMovement();
 };

@@ -19,7 +19,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	MovePlatform(DeltaTime); 
+	MovePlatform(DeltaTime);
+	RotatePlatform(DeltaTime);
 }
 
 void AMovingPlatform::MovePlatform(float DeltaTime)
@@ -49,4 +50,9 @@ void AMovingPlatform::LogOvershoot(float const DistanceMoved)
 {
 	const float Overshoot = DistanceMoved - MaxMoveValue;
 	UE_LOG(LogTemp, Display, TEXT("Overshoot [%s] Distance: %f"), *GetName(), Overshoot);
+}
+
+void AMovingPlatform::RotatePlatform(float DeltaTime)
+{
+	UE_LOG(LogTemp, Display, TEXT("Rotate Called!"))
 }
